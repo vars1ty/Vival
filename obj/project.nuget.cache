@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "45On6hfb+VvtgeEQYDZTOnHmipu5/EQWIT++nNQyx0Lq1XZHHvPonuEMCSJbmDPv/qYHrNHqguwinb/rT8YQbg==",
+  "success": true,
+  "projectFilePath": "/storage/NVME2/General/Coding/Vival/Vival/Vival.csproj",
+  "expectedPackageFiles": [
+    "/home/narcotics/.nuget/packages/atksharp/3.24.24.34/atksharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/cairosharp/3.24.24.34/cairosharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/eto.forms/2.6.1/eto.forms.2.6.1.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/eto.platform.gtk/2.6.1/eto.platform.gtk.2.6.1.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/gdksharp/3.24.24.34/gdksharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/giosharp/3.24.24.34/giosharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/glibsharp/3.24.24.34/glibsharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/gtksharp/3.24.24.34/gtksharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/pangosharp/3.24.24.34/pangosharp.3.24.24.34.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "/home/narcotics/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.2/microsoft.aspnetcore.app.ref.6.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
