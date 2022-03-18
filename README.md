@@ -11,7 +11,7 @@ Learn C#
 * xdotool (X11)
 * dotnet-runtime - 6.0+
 * dotnet-sdk - 6.0+
-## Are PRS (Pull Requests) allowed?
+## Are PRS (Pull Requests) accepted?
 Yeah, as long as they satisfy IntelliSense, the code is clean and documented (much like the original code) and doesn't add additional libraries **without a solid and good reason as to why it should be added**, and I'm talking about a love-like description as to why I should even consider it.
 # Known flaws
 ```diff
