@@ -95,7 +95,7 @@ public sealed class VivalBar : Form
                     DrawText(LinuxUtils.GetConsoleOut("uname", "-r"), Colors.Gray),
                     Separator(),
                     DrawText(" ", Colors.White, 5, 3),
-                    DrawText("GeForce RTX 3070 Ti DD", Colors.Gray),
+                    DrawText("GeForce RTX 3070 Ti", Colors.Gray),
                     DrawDate())
             }
         };

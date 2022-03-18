@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/storage/NVME2/General/Coding/Vival/Vival/Vival.csproj": {}
+    "/storage/NVME2/General/Git/Vival/Vival.csproj": {}
   },
   "projects": {
-    "/storage/NVME2/General/Coding/Vival/Vival/Vival.csproj": {
+    "/storage/NVME2/General/Git/Vival/Vival.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/storage/NVME2/General/Coding/Vival/Vival/Vival.csproj",
+        "projectUniqueName": "/storage/NVME2/General/Git/Vival/Vival.csproj",
         "projectName": "Vival",
-        "projectPath": "/storage/NVME2/General/Coding/Vival/Vival/Vival.csproj",
+        "projectPath": "/storage/NVME2/General/Git/Vival/Vival.csproj",
         "packagesPath": "/home/narcotics/.nuget/packages/",
-        "outputPath": "/storage/NVME2/General/Coding/Vival/Vival/obj/",
+        "outputPath": "/storage/NVME2/General/Git/Vival/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/narcotics/.nuget/NuGet/NuGet.Config"
