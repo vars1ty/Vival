@@ -5,11 +5,13 @@ Not much apart from the fact that its made in C# and offers 0 configuration file
 ## Which file is used to render the bar?
 `bars/VivalBar.cs`
 ## How do I run it?
-Note: This is for the binary that was compiled with the Release tag, it may not be up-to-date constantly.
+Note: This is for the binary that was compiled with the Release tag, it may not always be up-to-date.
+
+To keep it up-to-date, build it from source yourself by using the shell-script.
 ***
 `git clone https://github.com/qqtc0/Vival.git && Vival/bin/Release/net6.0/Vival & disown && clear`
 ## How do I build it?
-Learn C#
+`./build-vival.sh` - .NET SDK is required
 ### Dependencies
 * Bash
 * xdotool (X11)
