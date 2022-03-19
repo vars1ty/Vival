@@ -24,3 +24,13 @@ Yeah, as long as they satisfy IntelliSense, the code is clean and documented (mu
   * Setting up a keybind to start the bar is adviced so you can toggle it on/off when needed.
 - Borders on WMs like xmonad may start flashing due to how Vival deals with fetching system-related data from bash.
 ```
+## Multi-monitor issues
+This is made explicitly for xmonad.
+***
+If you're experiencing the bar hopping from workspace to workspace, try and make the bar load on startup automatically **and** is inside xmonad's window rules.
+
+Config: `~/.xmonad/xmonad.hs`
+
+![image](https://user-images.githubusercontent.com/54314240/159103939-5b2a4509-60a6-4d27-ab5f-ae73fbae21a1.png)
+
+For starting it, add this to your startup hook: `spawnOnce (path-to-vival) & disown`
