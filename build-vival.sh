@@ -1,0 +1,3 @@
+echo Building Vival, please wait...
+dotnet build --configuration Release
+echo Done
