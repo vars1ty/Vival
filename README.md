@@ -21,6 +21,7 @@ Yeah, as long as they satisfy IntelliSense, the code is clean and documented (mu
 ```diff
 - The bar can be resized on WMs like xmonad, which shouldn't be happening but can't exactly be prevented in any good way as of right now.
 - Currently the overlay is rendered as a "Form" using Eto.Forms - GTK, which means it appears in every truly non-fullscreen application (videos and borderless-windowed games for example).
+  * This can be prevented in xmonad by adding it to your window rules.
   * Setting up a keybind to start the bar is adviced so you can toggle it on/off when needed.
 - Borders on WMs like xmonad may start flashing due to how Vival deals with fetching system-related data from bash.
 ```
