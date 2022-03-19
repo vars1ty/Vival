@@ -84,17 +84,19 @@ public sealed class VivalBar : Form
             Padding = contentPadding,
             Rows =
             {
-                new TableRow(DrawText(" ", Colors.White, 0, 3),
+                new TableRow(DrawText(" ", Colors.White, null, 0, 3),
                     Separator(),
                     DrawText(Environment.UserName, Colors.Gray),
                     Separator(),
-                    DrawText(" ", Colors.White, 5, 3),
+                    DrawText(" ", Colors.White, null, 5, 3),
+                    DrawText(" ", Colors.White, DecreaseWorkspace, 0, 3),
                     workspaces,
+                    DrawText(" ", Colors.White, IncreaseWorkspace, 0, 3),
                     Separator(),
-                    DrawText(" ", Colors.White, 5, 3),
+                    DrawText(" ", Colors.White, null, 5, 3),
                     DrawText(LinuxUtils.GetConsoleOut("uname", "-r"), Colors.Gray),
                     Separator(),
-                    DrawText(" ", Colors.White, 5, 3),
+                    DrawText(" ", Colors.White, null, 5, 3),
                     DrawText("GeForce RTX 3070 Ti", Colors.Gray),
                     DrawDate())
             }
@@ -102,28 +104,41 @@ public sealed class VivalBar : Form
     }
 
     /// <summary>
-    /// Draws text.
+    /// Switch to the next workspace.
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="textColor"></param>
-    /// <returns></returns>
-    private TableCell DrawText(string text, Color textColor) => new(new Label
-    {
-        Text = text, TextColor = textColor
-    });
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void IncreaseWorkspace(object? sender, MouseEventArgs e) =>
+        LinuxUtils.ExecuteCommand("xdotool set_desktop --relative 1");
+
+    /// <summary>
+    /// Switch to the previous workspace.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DecreaseWorkspace(object? sender, MouseEventArgs e) =>
+        LinuxUtils.ExecuteCommand("xdotool set_desktop --relative -- -1");
 
     /// <summary>
     /// Draws text.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="textColor"></param>
+    /// <param name="callback"></param>
     /// <param name="leftOffset"></param>
     /// <param name="yOffset"></param>
     /// <returns></returns>
-    private TableCell DrawText(string text, Color textColor, int leftOffset, int yOffset) => new(new TableLayout
+    private TableCell DrawText(string text, Color textColor, EventHandler<MouseEventArgs>? callback = null,
+        int leftOffset = 0, int yOffset = 0)
     {
-        Padding = new Padding(leftOffset, yOffset, 0, 0), Rows = {new Label {Text = text, TextColor = textColor}}
-    });
+        var label = new Label {Text = text, TextColor = textColor};
+        if (callback is not null) label.MouseDown += callback;
+        var layout = new TableLayout {Rows = {label}};
+        var cell = new TableCell(layout);
+        if (leftOffset + yOffset is 0) return cell;
+        layout.Padding = new Padding(leftOffset, yOffset);
+        return cell;
+    }
 
     /// <summary>
     /// Draws the current date and time.
@@ -181,7 +196,7 @@ public sealed class VivalBar : Form
                     workspaces.Text =
                         $"{LinuxUtils.GetConsoleOut("/usr/bin/bash", "-c \"expr $(xdotool get_desktop) + 1\"")} / 9";
                 });
-                Thread.Sleep(1000);
+                Thread.Sleep(360);
                 // ! GC.Collect() is needed mainly because of the allocation issues from redrawing components.
                 GC.Collect();
             }
