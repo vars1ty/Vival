@@ -19,7 +19,8 @@ Learn C#
 Yeah, as long as they satisfy IntelliSense, the code is clean and documented (much like the original code) and doesn't add additional libraries **without a solid and good reason as to why it should be added**, and I'm talking about a love-like description as to why I should even consider it.
 # Known flaws
 ```diff
-- The bar can be resized on WMs like xmonad, which shouldn't be happening but can't exactly be prevented in any good way as of right now.
+- The bar can be resized in WMs like xmonad, which shouldn't be happening but can't exactly be prevented in any good way as of right now.
+  * Can be fixed by adjusting your config.
 - Currently the overlay is rendered as a "Form" using Eto.Forms - GTK, which means it appears in every truly non-fullscreen application (videos and borderless-windowed games for example).
   * This can be prevented in xmonad by adding it to your window rules.
   * Setting up a keybind to start the bar is adviced so you can toggle it on/off when needed.
@@ -34,4 +35,4 @@ Config: `~/.xmonad/xmonad.hs`
 
 ![image](https://user-images.githubusercontent.com/54314240/159103939-5b2a4509-60a6-4d27-ab5f-ae73fbae21a1.png)
 
-For starting it, add this to your startup hook: `spawnOnce (path-to-vival) & disown`
+For starting it, add this to your startup hook: `spawnOnce "(path-to-vival) & disown"`
