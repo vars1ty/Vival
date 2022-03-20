@@ -19,11 +19,20 @@ public sealed class VivalBar : Form
     };
 
     /// <summary>
-    /// The workspaces label (current / max) - max is set as '9', change it if you have more workspaces.
+    /// The workspaces label (current / max).
     /// </summary>
     private readonly Label workspaces = new()
     {
-        Text = $"{LinuxUtils.GetConsoleOut("/usr/bin/bash", "-c \"expr $(xdotool get_desktop) + 1\"")} / 9",
+        Text = $"{LinuxUtils.GetActiveWorkspace()} / {LinuxUtils.workspacesCount}",
+        TextColor = Colors.Gray
+    };
+
+    /// <summary>
+    /// The currently active window.
+    /// </summary>
+    private readonly Label activeWindow = new()
+    {
+        Text = LinuxUtils.GetActiveWindowTitle(),
         TextColor = Colors.Gray
     };
 
@@ -41,12 +50,24 @@ public sealed class VivalBar : Form
     /// Max and Min size.
     /// </summary>
     // * Replace 1920 with your screens width and make proper adjustments if needed.
+    // * 1920 can also (in theory, not tested) be extended to your total resolution (all monitors combined) to stretch across them.
     private readonly Size defaultSize = new(1920, 22);
 
     /// <summary>
     /// Spacing for <see cref="DrawContent"/>.
     /// </summary>
     private readonly Size contentSpacing = new(5, 5);
+
+    /// <summary>
+    /// This is the position that's used for the bar.
+    /// <para>0, 0 by default which makes it spawn on your first monitor.</para>
+    /// </summary>
+    private readonly Point position = new(0, 0);
+
+    /// <summary>
+    /// Symbol used in <see cref="Separator"/>.
+    /// </summary>
+    private const string separator = "|";
     #endregion
 
     /// <summary>
@@ -59,7 +80,7 @@ public sealed class VivalBar : Form
         // * Not like xmonad gives the slightest shit about MinimumSize but yeah.
         Size = MinimumSize = defaultSize;
         AutoSize = true;
-        CanFocus = Resizable = Topmost = false;
+        Resizable = Topmost = false;
         BackgroundColor = Color.FromArgb(10, 10, 10);
         HackSyncSize();
         UpdateBar();
@@ -70,13 +91,12 @@ public sealed class VivalBar : Form
     /// Creates a new gray "|" separator.
     /// </summary>
     /// <returns></returns>
-    private TableCell Separator() => new(new Label {Text = "|", TextColor = Colors.Gray});
+    private TableCell Separator() => new(new Label {Text = separator, TextColor = Colors.Gray});
 
     /// <summary>
     /// Draws all of the content.
     /// </summary>
-    private void DrawContent()
-    {
+    private void DrawContent() =>
         // * Begin drawing the cells.
         Content = new TableLayout
         {
@@ -89,35 +109,21 @@ public sealed class VivalBar : Form
                     DrawText(Environment.UserName, Colors.Gray),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
-                    DrawText(" ", Colors.White, DecreaseWorkspace, 0, 3),
+                    DrawText(" ", Colors.White, LinuxUtils.OnRequestDecreaseWorkspace, 0, 3),
                     workspaces,
-                    DrawText(" ", Colors.White, IncreaseWorkspace, 0, 3),
+                    DrawText(" ", Colors.White, LinuxUtils.OnRequestIncreaseWorkspace, 0, 3),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
-                    DrawText(LinuxUtils.GetConsoleOut("uname", "-r"), Colors.Gray),
+                    DrawText(LinuxUtils.GetKernel(), Colors.Gray),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
-                    DrawText("GeForce RTX 3070 Ti", Colors.Gray),
+                    DrawText(LinuxUtils.GetGPUName(), Colors.Gray),
+                    Separator(),
+                    DrawText(" ", Colors.White, null, 5, 3),
+                    activeWindow,
                     DrawDate())
             }
         };
-    }
-
-    /// <summary>
-    /// Switch to the next workspace.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void IncreaseWorkspace(object? sender, MouseEventArgs e) =>
-        LinuxUtils.ExecuteCommand("xdotool set_desktop --relative 1");
-
-    /// <summary>
-    /// Switch to the previous workspace.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void DecreaseWorkspace(object? sender, MouseEventArgs e) =>
-        LinuxUtils.ExecuteCommand("xdotool set_desktop --relative -- -1");
 
     /// <summary>
     /// Draws text.
@@ -158,11 +164,12 @@ public sealed class VivalBar : Form
     /// </summary>
     private async void HackSyncSize()
     {
+        const int wait = 50;
         while (true)
         {
             Size = defaultSize;
-            Location = default;
-            await Task.Delay(50);
+            Location = position;
+            await Task.Delay(wait);
         }
         // ReSharper disable once FunctionNeverReturns
     }
@@ -174,11 +181,12 @@ public sealed class VivalBar : Form
     private void SyncWorkspace() =>
         new Thread(() =>
         {
+            const int wait = 100;
             while (true)
             {
                 LinuxUtils.ExecuteCommand(
                     "xdotool search --class Vival set_desktop_for_window %@ $(xdotool get_desktop)");
-                Thread.Sleep(100);
+                Thread.Sleep(wait);
             }
         }) {Priority = ThreadPriority.Lowest, IsBackground = true}.Start();
 
@@ -188,15 +196,16 @@ public sealed class VivalBar : Form
     private void UpdateBar() =>
         new Thread(() =>
         {
+            const int wait = 360;
             while (true)
             {
                 Application.Instance.Invoke(() =>
                 {
                     date.Text = $"{DateTime.Now:D} ({DateTime.Now:HH:mm:ss})";
-                    workspaces.Text =
-                        $"{LinuxUtils.GetConsoleOut("/usr/bin/bash", "-c \"expr $(xdotool get_desktop) + 1\"")} / 9";
+                    workspaces.Text = $"{LinuxUtils.GetActiveWorkspace()} / {LinuxUtils.workspacesCount}";
+                    activeWindow.Text = LinuxUtils.GetActiveWindowTitle();
                 });
-                Thread.Sleep(360);
+                Thread.Sleep(wait);
                 // ! GC.Collect() is needed mainly because of the allocation issues from redrawing components.
                 GC.Collect();
             }

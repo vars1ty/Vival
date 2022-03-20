@@ -17,6 +17,7 @@ To keep it up-to-date, build it from source yourself by using the shell-script.
 * xdotool (X11)
 * dotnet-runtime - 6.0+
 * dotnet-sdk - 6.0+
+* Optionally: nerdfonts
 ## Are PRS (Pull Requests) accepted?
 Yeah, as long as they satisfy IntelliSense, the code is clean and documented (much like the original code) and doesn't add additional libraries **without a solid and good reason as to why it should be added**, and I'm talking about a love-like description as to why I should even consider it.
 # Known flaws
@@ -26,7 +27,7 @@ Yeah, as long as they satisfy IntelliSense, the code is clean and documented (mu
 - Currently the overlay is rendered as a "Form" using Eto.Forms - GTK, which means it appears in every truly non-fullscreen application (videos and borderless-windowed games for example).
   * This can be prevented in xmonad by adding it to your window rules.
   * Setting up a keybind to start the bar is adviced so you can toggle it on/off when needed.
-- Borders on WMs like xmonad may start flashing due to how Vival deals with fetching system-related data from bash.
+- Borders in WMs like xmonad may start flashing due to how Vival deals with fetching system-related data from bash.
 ```
 ## Multi-monitor issues
 This is made explicitly for xmonad.
