@@ -6,6 +6,7 @@ namespace Vival;
 internal static class LinuxUtils
 {
     #region Variables
+
     /// <summary>
     /// <see cref="ProcessStartInfo"/> info for <see cref="GetConsoleOut"/> and <see cref="ExecuteCommand"/>.
     /// </summary>
@@ -31,6 +32,7 @@ internal static class LinuxUtils
     /// New line character.
     /// </summary>
     private const char split = '\n';
+
     #endregion
 
     /// <summary>
@@ -99,6 +101,17 @@ internal static class LinuxUtils
     {
         var result = Convert.ToInt32(GetConsoleOut("xdotool", "get_desktop"));
         return startFromOne ? result + 1 : result;
+    }
+
+    /// <summary>
+    /// Get the Workspace ID from a programs class name (for example, Vival).
+    /// </summary>
+    /// <param name="className"></param>
+    /// <returns></returns>
+    public static int GetClassWorkspace(string className)
+    {
+        var result = Convert.ToInt32(GetConsoleOut("xdotool", $"search --class {className} get_desktop"));
+        return result;
     }
 
     /// <summary>

@@ -351,11 +351,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/storage/NVME2/General/Git/Vival/Vival.csproj",
+      "projectUniqueName": "/storage/NVME2/General/Git/VivalGit/Vival/Vival.csproj",
       "projectName": "Vival",
-      "projectPath": "/storage/NVME2/General/Git/Vival/Vival.csproj",
+      "projectPath": "/storage/NVME2/General/Git/VivalGit/Vival/Vival.csproj",
       "packagesPath": "/home/narcotics/.nuget/packages/",
-      "outputPath": "/storage/NVME2/General/Git/Vival/obj/",
+      "outputPath": "/storage/NVME2/General/Git/VivalGit/Vival/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/narcotics/.nuget/NuGet/NuGet.Config"
