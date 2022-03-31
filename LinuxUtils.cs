@@ -6,7 +6,6 @@ namespace Vival;
 internal static class LinuxUtils
 {
     #region Variables
-
     /// <summary>
     /// <see cref="ProcessStartInfo"/> info for <see cref="GetConsoleOut"/> and <see cref="ExecuteCommand"/>.
     /// </summary>
@@ -32,7 +31,6 @@ internal static class LinuxUtils
     /// New line character.
     /// </summary>
     private const char split = '\n';
-
     #endregion
 
     /// <summary>

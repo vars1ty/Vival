@@ -6,7 +6,6 @@ namespace Vival.bars;
 public sealed class VivalBar : Form
 {
     #region Variables
-
     /// <summary>
     /// The date label.
     /// </summary>
@@ -69,7 +68,6 @@ public sealed class VivalBar : Form
     /// Symbol used in <see cref="Separator"/>.
     /// </summary>
     private const string separator = "|";
-
     #endregion
 
     /// <summary>
@@ -158,7 +156,6 @@ public sealed class VivalBar : Form
             Padding = datePadding,
             Rows = {date}
         });
-
 
     /// <summary>
     /// Shitty way of trying to keep the size consistent.
