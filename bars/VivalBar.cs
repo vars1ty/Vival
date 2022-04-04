@@ -23,7 +23,7 @@ public sealed class VivalBar : Form
     /// </summary>
     private readonly Label workspaces = new()
     {
-        Text = $"{LinuxUtils.GetActiveWorkspace()} / {LinuxUtils.workspacesCount}",
+        Text = $"1 / {LinuxUtils.workspacesCount}",
         TextColor = Colors.Gray
     };
 
@@ -32,7 +32,7 @@ public sealed class VivalBar : Form
     /// </summary>
     private readonly Label activeWindow = new()
     {
-        Text = LinuxUtils.GetActiveWindowTitle(),
+        Text = "Vival",
         TextColor = Colors.Gray
     };
 
@@ -76,7 +76,7 @@ public sealed class VivalBar : Form
     public VivalBar()
     {
         Title = "Vival";
-        DrawContent();
+        Application.Instance.InvokeAsync(async () => await DrawContent());
         // * Not like xmonad gives the slightest shit about MinimumSize but yeah.
         Size = MinimumSize = defaultSize;
         AutoSize = true;
@@ -96,7 +96,7 @@ public sealed class VivalBar : Form
     /// <summary>
     /// Draws all of the content.
     /// </summary>
-    private void DrawContent() =>
+    private async Task DrawContent() =>
         // * Begin drawing the cells.
         Content = new TableLayout
         {
@@ -114,10 +114,10 @@ public sealed class VivalBar : Form
                     DrawText(" ", Colors.White, LinuxUtils.OnRequestIncreaseWorkspace, 0, 3),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
-                    DrawText(LinuxUtils.GetKernel(), Colors.Gray),
+                    DrawText(await LinuxUtils.GetKernel(), Colors.Gray),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
-                    DrawText(LinuxUtils.GetGPUName(), Colors.Gray),
+                    DrawText(await LinuxUtils.GetGPUName(), Colors.Gray),
                     Separator(),
                     DrawText(" ", Colors.White, null, 5, 3),
                     activeWindow,
@@ -177,48 +177,46 @@ public sealed class VivalBar : Form
     /// Syncs the bar to the currently active workspace.
     /// <para>Thanks nukistan for helping with this.</para>
     /// </summary>
-    private void SyncWorkspace() =>
-        new Thread(() =>
+    private async void SyncWorkspace()
+    {
+        const int wait = 100;
+        const string @class = "Vival";
+        while (true)
         {
-            const int wait = 100;
-            const string @class = "Vival";
-            while (true)
+            try
             {
-                try
-                {
-                    // ! Fix for Issue #1: xmonad border flashing
-                    if (LinuxUtils.GetClassWorkspace(@class) != LinuxUtils.GetActiveWorkspace(false))
-                        LinuxUtils.ExecuteCommand(
-                            "xdotool search --class Vival set_desktop_for_window %@ $(xdotool get_desktop)");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // ignored from here.
-                }
-
-                Thread.Sleep(wait);
+                // ! Fix for Issue #1: xmonad border flashing
+                if (await LinuxUtils.GetClassWorkspace(@class) != await LinuxUtils.GetActiveWorkspace(false))
+                    await LinuxUtils.ExecuteCommand(
+                        "xdotool search --class Vival set_desktop_for_window %@ $(xdotool get_desktop)");
             }
-        }) {Priority = ThreadPriority.Lowest, IsBackground = true}.Start();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // ignored from here.
+            }
+
+            await Task.Delay(wait);
+        }
+    }
 
     /// <summary>
     /// Updates the bars content.
     /// </summary>
-    private void UpdateBar() =>
-        new Thread(() =>
+    private async void UpdateBar()
+    {
+        const int wait = 360;
+        while (true)
         {
-            const int wait = 360;
-            while (true)
+            await Application.Instance.InvokeAsync(async () =>
             {
-                Application.Instance.Invoke(() =>
-                {
-                    date.Text = $"{DateTime.Now:D} ({DateTime.Now:HH:mm:ss})";
-                    workspaces.Text = $"{LinuxUtils.GetActiveWorkspace()} / {LinuxUtils.workspacesCount}";
-                    activeWindow.Text = LinuxUtils.GetActiveWindowTitle();
-                });
-                Thread.Sleep(wait);
-                // ! GC.Collect() is needed mainly because of the allocation issues from redrawing components.
-                GC.Collect();
-            }
-        }) {Priority = ThreadPriority.Lowest, IsBackground = true}.Start();
+                date.Text = $"{DateTime.Now:D} ({DateTime.Now:HH:mm:ss})";
+                workspaces.Text = $"{await LinuxUtils.GetActiveWorkspace()} / {LinuxUtils.workspacesCount}";
+                activeWindow.Text = await LinuxUtils.GetActiveWindowTitle();
+            });
+            await Task.Delay(wait);
+            // ! GC.Collect() is needed mainly because of the allocation issues from redrawing components.
+            GC.Collect();
+        }
+    }
 }
