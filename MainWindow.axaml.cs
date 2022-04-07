@@ -89,9 +89,9 @@ namespace Vival
 
         /// <summary>
         /// Vivals width (current, min, max).
-        /// <para>Default is <c>1920 - 2</c>.</para>
+        /// <para>Default is <c>1920</c>.</para>
         /// </summary>
-        private const int width = 1920 - 2;
+        private const int width = 1920;
         #endregion
 
         #region Bindings
