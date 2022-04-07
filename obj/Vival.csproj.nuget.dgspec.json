@@ -46,10 +46,6 @@
               "target": "Package",
               "version": "[0.10.13, )"
             },
-            "Avalonia.Diagnostics": {
-              "target": "Package",
-              "version": "[0.10.13, )"
-            },
             "XamlNameReferenceGenerator": {
               "target": "Package",
               "version": "[1.3.4, )"

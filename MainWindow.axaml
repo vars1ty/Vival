@@ -35,10 +35,9 @@
             <Label Grid.Row="0" Grid.Column="8" Content="|" />
             <Label Grid.Row="0" Grid.Column="9" Foreground="White" Width="25" Content=" " />
             <Label Grid.Row="0" Grid.Column="10" Content="{Binding CurrentWindow}" />
-
         </Grid>
         <!-- Right Side -->
-        <Grid HorizontalAlignment="Right" RowDefinitions="Auto" ColumnDefinitions="Auto,Auto" Margin="0, -2, 0, 0">
+        <Grid HorizontalAlignment="Right" RowDefinitions="Auto" ColumnDefinitions="Auto" Margin="0, -2, 0, 0">
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding CurrentDate}" />
         </Grid>
     </Panel>
