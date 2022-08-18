@@ -1,3 +1,9 @@
+> **Warning**:
+> Vival is no longer being maintained, use [Hybrid](https://github.com/dev11n/HybridBar) instead if you use Wayland.
+>
+> The latest, most stable and efficient release is under the [`avalonia`](https://github.com/dev11n/Vival/tree/avalonia) branch.
+>
+> NOTE: Vival is mainly made to work on the xmonad window manager, so for it to sync position to other workspaces, you have to adapt to the other window managers structure.
 # Vival
 Yet *another* minimalistic text-based status bar made for Linux
 ## What differs?
